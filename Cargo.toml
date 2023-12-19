@@ -1,0 +1,10 @@
+[package]
+name = "test_ice_secp256k1"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+libloading = "0.8.1"
+hex = "0.4.3"
+rand = "0.8.5"
