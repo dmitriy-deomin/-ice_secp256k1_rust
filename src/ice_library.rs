@@ -65,7 +65,13 @@ impl IceLibrary {
         hex::encode(res)
     }
 
-
-
+    pub fn publickey_uncompres_to_compres(&self,pub_hex: &str) -> String {
+        let ice_pub_comp = if u64::from_str_radix(&pub_hex[129..], 16).unwrap() % 2 == 0 {
+            format!("02{}", &pub_hex[2..66])
+        } else {
+            format!("03{}", &pub_hex[2..66])
+        };
+        ice_pub_comp
+    }
 
 }
