@@ -49,6 +49,17 @@ fn main() {
 
         let public_key_u = ice_library.privatekey_to_publickey(hex_rand.as_str());
 
+        let h160 = ice_library.privatekey_to_h160(hex_rand.as_str());
+
+        let ice_pub_key_unc = ice_library.privatekey_to_publickey(hex_rand.as_str());
+        let ice_pub_key_com = ice_library.publickey_uncompres_to_compres(ice_pub_key_unc.as_str());
+
+        let pub_key_unc = hex::decode(&ice_pub_key_unc).unwrap();
+        let pub_key_com = hex::decode(&ice_pub_key_com).unwrap();
+
+        let hash160_u = hash160(&pub_key_unc);
+        let hash160_c = hash160(&pub_key_com);
+
         //---------------
         speed = speed + 1;
         if start.elapsed() >= Duration::from_secs(1) {

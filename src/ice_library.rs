@@ -74,4 +74,25 @@ impl IceLibrary {
         ice_pub_comp
     }
 
+    // pub fn privatekey_to_h160(&self, hexx: &str) -> [u8; 20] {
+    //     let privatekey_to_h160: Symbol<unsafe extern "C" fn(i32, bool, *const c_char, *mut u8) -> ()> =
+    //         unsafe { self.ice.get(b"privatekey_to_h160").unwrap() };
+    //     let private_key = CString::new(hexx).expect("Не удалось создать CString");
+    //     let mut res = [0u8; 20];
+    //
+    //     unsafe { privatekey_to_h160(0, true, private_key.as_ptr(), res.as_mut_ptr()) };
+    //     res
+    // }
+    #[allow(invalid_value)]
+    pub fn privatekey_to_h160(&self, hexx: &str) -> [u8; 20] {
+        let privatekey_to_h160: Symbol<unsafe extern "C" fn(i32, bool, *const c_char, *mut u8) -> ()> =
+            unsafe { self.ice.get(b"privatekey_to_h160").unwrap() };
+        let mut res: [u8; 20] = unsafe { std::mem::MaybeUninit::uninit().assume_init() };
+
+        let private_key = CString::new(hexx).expect("Не удалось создать CString");
+
+        unsafe { privatekey_to_h160(0, true, private_key.as_ptr(), res.as_mut_ptr()) };
+        res
+    }
+
 }
